@@ -1,7 +1,8 @@
 package com.al4apps.binlib.data.repositories
 
+import android.util.Log
 import com.al4apps.binlib.data.datasource.DbSource
-import com.al4apps.binlib.data.datasource.TestDataSource
+import com.al4apps.binlib.data.datasource.NetworkDataSource
 import com.al4apps.binlib.data.models.BankDto
 import com.al4apps.binlib.data.models.CardDto
 import com.al4apps.binlib.data.models.CountryDto
@@ -14,11 +15,13 @@ import com.al4apps.binlib.domain.repositories.CardsRepository
 import kotlinx.coroutines.flow.Flow
 
 class CardsRepositoryImpl(
-    private val dataSource: TestDataSource,
+    private val dataSource: NetworkDataSource,
     private val dbSource: DbSource
 ) : CardsRepository {
     override suspend fun getCardInfo(number: Int): CardModel {
-        return dataSource.getCardInfo(number).toCardModel()
+        val card = dataSource.getCardInfo(number)
+        dbSource.saveCard(card)
+        return card.toCardModel()
     }
 
     override fun savedCards(): Flow<List<CardModel>> {

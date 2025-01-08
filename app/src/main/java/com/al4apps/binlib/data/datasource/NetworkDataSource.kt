@@ -7,6 +7,6 @@ class NetworkDataSource(
     private val binListApi: BinListApi
 ) : DataSource {
     override suspend fun getCardInfo(number: Int): CardDto {
-        return binListApi.getCardInfo(number)
+        return binListApi.getCardInfo(number.toString())
     }
 }

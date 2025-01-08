@@ -10,9 +10,7 @@ import com.al4apps.binlib.domain.models.Country
 data class CardDb(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = COLUMN_ID)
-    val id: Int,
-    @ColumnInfo(name = COLUMN_BIN)
-    val bin: Int,
+    val id: Int? = null,
     @ColumnInfo(name = COLUMN_NUMBER_LENGTH)
     val numberLength: Int?,
     @ColumnInfo(name = COLUMN_SCHEME)
@@ -20,16 +18,18 @@ data class CardDb(
     @ColumnInfo(name = COLUMN_TYPE)
     val type: String?,
     @ColumnInfo(name = COLUMN_BRAND)
-    val brand: String?
+    val brand: String?,
+    @ColumnInfo(name = COLUMN_TIMESTAMP)
+    val timestamp: Long
 ) {
     companion object {
         const val TABLE_NAME = "card"
         const val COLUMN_ID = "id"
-        const val COLUMN_BIN = "bin"
         const val COLUMN_NUMBER_LENGTH = "number_length"
         const val COLUMN_SCHEME = "scheme"
         const val COLUMN_TYPE = "type"
         const val COLUMN_BRAND = "brand"
+        const val COLUMN_TIMESTAMP = "timestamp"
     }
 }
 
@@ -37,7 +37,7 @@ data class CardDb(
 data class CountryDb(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = COLUMN_ID)
-    val id: Int,
+    val id: Int? = null,
     @ColumnInfo(name = COLUMN_CARD_ID)
     val cardId: Int,
     @ColumnInfo(name = COLUMN_NUMERIC)
@@ -74,7 +74,7 @@ data class CountryDb(
 data class BankDb(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = COLUMN_ID)
-    val id: Int,
+    val id: Int? = null,
     @ColumnInfo(name = COLUMN_CARD_ID)
     val cardId: Int,
     @ColumnInfo(name = COLUMN_NAME)

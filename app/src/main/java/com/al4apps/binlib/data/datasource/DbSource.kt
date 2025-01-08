@@ -1,9 +1,13 @@
 package com.al4apps.binlib.data.datasource
 
+import android.util.Log
 import com.al4apps.binlib.data.db.CardsDao
 import com.al4apps.binlib.data.models.BankDb
+import com.al4apps.binlib.data.models.BankDto
 import com.al4apps.binlib.data.models.CardDb
+import com.al4apps.binlib.data.models.CardDto
 import com.al4apps.binlib.data.models.CountryDb
+import com.al4apps.binlib.data.models.CountryDto
 import com.al4apps.binlib.domain.models.BankModel
 import com.al4apps.binlib.domain.models.CardModel
 import com.al4apps.binlib.domain.models.CountryModel
@@ -18,11 +22,56 @@ class DbSource(
     fun savedCards(): Flow<List<CardModel>> {
         return dao.cards().map { list ->
             list.map {
-                val country = dao.getCountryDbByCardId(it.id)
-                val bank = dao.getBankDbByCardId(it.id)
+                val country = it.id?.let { it1 -> dao.getCountryDbByCardId(it1) }
+                val bank = it.id?.let { it1 -> dao.getBankDbByCardId(it1) }
                 it.toCardModel(country, bank)
             }
         }
+    }
+
+    suspend fun saveCard(card: CardDto) {
+        card.toCardDb().let { cardDb ->
+            val cardId = dao.saveCard(cardDb)
+            card.country?.toCountryDb(cardId.toInt())?.let { countryDb ->
+                dao.saveCountry(countryDb)
+            }
+            card.bank?.toBankDb(cardId.toInt())?.let { bankDb ->
+                dao.saveBank(bankDb)
+            }
+        }
+    }
+
+    private fun CardDto.toCardDb(): CardDb {
+        return CardDb(
+            numberLength = number?.length,
+            scheme = scheme,
+            type = type,
+            brand = brand,
+            timestamp = System.currentTimeMillis()
+        )
+    }
+
+    private fun CountryDto.toCountryDb(cardId: Int): CountryDb {
+        return CountryDb(
+            numeric = numeric,
+            alpha2 = alpha2,
+            name = name,
+            emoji = emoji,
+            currency = currency,
+            latitude = latitude,
+            longitude = longitude,
+            cardId = cardId
+        )
+    }
+
+    private fun BankDto.toBankDb(cardId: Int): BankDb {
+        return BankDb(
+            name = name,
+            url = url,
+            phone = phone,
+            city = city,
+            cardId = cardId,
+        )
     }
 
     private fun CardDb.toCardModel(country: CountryDb?, bank: BankDb?): CardModel {

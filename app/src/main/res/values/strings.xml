@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Bin Lib</string>
+    <string name="bin_info_country_name">Country: %1$s</string>
+    <string name="bin_info_coordinates">Coordinates:&#160;</string>
+    <string name="bin_info_card_type">Card Type: %1$s</string>
+    <string name="bin_info_bank_name">Bank: %1$s</string>
+    <string name="bin_info_website">Website:&#160;</string>
+    <string name="bin_info_phone">Phone:&#160;</string>
+    <string name="bin_text_field_hint">Enter BIN</string>
+    <string name="bin_lookup_title">BIN Lookup</string>
+    <string name="lookup_button_text">Lookup</string>
+    <string name="view_history_button_text">View History</string>
+    <string name="history_screen_title">History</string>
+    <string name="back_button_content_description">to back</string>
 </resources>

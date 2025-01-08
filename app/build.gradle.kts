@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.al4apps.binlib"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.al4apps.binlib"
@@ -72,4 +72,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
+
+    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.navigation.compose)
 }

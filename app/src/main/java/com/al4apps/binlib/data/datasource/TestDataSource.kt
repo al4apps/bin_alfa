@@ -30,7 +30,5 @@ class TestDataSource: DataSource {
                 city = "Hjørring"
             )
         )
-
-
     }
 }

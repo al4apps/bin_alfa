@@ -31,7 +31,7 @@ data class CountryDto(
 
 data class BankDto(
     @SerializedName("name") override val name: String?,
-    @SerializedName("latitude") override val url: String?,
-    @SerializedName("latitude") override val phone: String?,
-    @SerializedName("latitude") override val city: String?
+    @SerializedName("url") override val url: String?,
+    @SerializedName("phone") override val phone: String?,
+    @SerializedName("city") override val city: String?
 ) : Bank

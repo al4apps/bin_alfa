@@ -6,7 +6,7 @@ import retrofit2.http.Path
 
 interface BinListApi {
 
-    @GET("{number}")
-    suspend fun getCardInfo(@Path("number") number: Int): CardDto
+    @GET("/{number}")
+    suspend fun getCardInfo(@Path("number") number: String): CardDto
 
 }
